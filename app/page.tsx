@@ -7,6 +7,7 @@ import Image from "next/image";
 
 export default function Portfolio() {
   const [activeSection, setActiveSection] = useState("home");
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const menuItems = [
     { id: "home", label: "Home" },
@@ -51,8 +52,42 @@ export default function Portfolio() {
 
   return (
     <motion.div className="flex min-h-screen bg-lavender-blush-100">
+      {/* Mobile Header */}
+      <header className="lg:hidden fixed top-0 left-0 right-0 h-16 flex items-center justify-between px-4 bg-background/90 backdrop-blur z-50 border-b border-border">
+        <div>
+          <h1 className="font-serif font-bold text-lg text-amber-50">
+            Sudharsan
+          </h1>
+        </div>
+        <div className="flex items-center gap-3">
+          <button
+            aria-label="Toggle menu"
+            onClick={() => setMobileMenuOpen((s) => !s)}
+            className="p-2 rounded-md bg-white/5">
+            {mobileMenuOpen ? "Close" : "Menu"}
+          </button>
+        </div>
+      </header>
+
+      {mobileMenuOpen && (
+        <div className="lg:hidden fixed inset-16 top-16 z-40 bg-background/95 backdrop-blur p-6">
+          <nav className="flex flex-col gap-4">
+            {menuItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => {
+                  scrollToSection(item.id);
+                  setMobileMenuOpen(false);
+                }}
+                className="font-sans text-lg uppercase text-foreground/90">
+                {item.label}
+              </button>
+            ))}
+          </nav>
+        </div>
+      )}
       {/* Sidebar */}
-      <aside className="fixed left-0 top-0 h-screen w-[285px] bg-gradient-to-b from-coffee-bean-900 to-coffee-bean-800 border-r border-pearl-aqua-500/20 flex flex-col justify-between py-14 px-12 z-50">
+      <aside className="hidden lg:flex fixed left-0 top-0 h-screen w-[285px] bg-gradient-to-b from-coffee-bean-900 to-coffee-bean-800 border-r border-pearl-aqua-500/20 flex-col justify-between py-14 px-12 z-50">
         {/* Logo */}
         <div>
           <h1 className="font-serif font-bold text-[30px] text-amber-50">
@@ -128,11 +163,11 @@ export default function Portfolio() {
       </aside>
 
       {/* Main Content */}
-      <main className="ml-[285px] flex-1 relative">
+      <main className="flex-1 relative lg:ml-[285px]">
         {/* Hero Section */}
         <section
           id="home"
-          className="relative min-h-screen flex items-center justify-between px-16 py-20 scroll-mt-0">
+          className="relative min-h-screen flex items-center justify-between px-6 sm:px-8 lg:px-16 py-12 sm:py-16 lg:py-20 scroll-mt-0">
           {/* Left Content */}
           <motion.div
             className="relative z-10 max-w-[600px]"
@@ -156,10 +191,10 @@ export default function Portfolio() {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
               viewport={{ once: false, amount: 0.3 }}>
-              <h1 className="font-serif font-bold text-[64px] text-foreground leading-tight mb-24">
+              <h1 className="font-serif font-bold text-3xl sm:text-4xl md:text-5xl lg:text-[64px] text-foreground leading-tight mb-8 lg:mb-24">
                 Hi, I&apos;m Sudharsan
               </h1>
-              <h3 className="font-sans text-[30px] text-foreground/80 leading-relaxed">
+              <h3 className="font-sans text-lg sm:text-xl md:text-2xl lg:text-[30px] text-foreground/80 leading-relaxed">
                 <span className="font-bold">Full-Stack & AI Engineer</span>{" "}
                 <br />
                 Building scalable systems and intelligent products end to end.
@@ -182,7 +217,7 @@ export default function Portfolio() {
         {/* About Section */}
         <section
           id="about"
-          className="min-h-screen flex items-center px-16 py-20 scroll-mt-0">
+          className="min-h-screen flex items-center px-6 sm:px-8 lg:px-16 py-12 sm:py-16 lg:py-20 scroll-mt-0">
           <motion.div
             className="max-w-4xl"
             initial={{ opacity: 0, y: 50 }}
@@ -190,7 +225,7 @@ export default function Portfolio() {
             transition={{ duration: 0.8 }}
             viewport={{ once: false, amount: 0.3 }}>
             <motion.h2
-              className="font-serif font-bold text-[48px] text-foreground mb-8"
+              className="font-serif font-bold text-2xl sm:text-3xl md:text-4xl lg:text-[48px] text-foreground mb-8"
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
@@ -229,7 +264,7 @@ export default function Portfolio() {
             </motion.div>
 
             <motion.div
-              className="grid grid-cols-3 gap-8 mt-12"
+              className="grid grid-cols-1 sm:grid-cols-3 gap-8 mt-8 sm:mt-12"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
@@ -268,10 +303,10 @@ export default function Portfolio() {
         {/* Experiences Section */}
         <section
           id="experiences"
-          className="min-h-screen flex items-center px-16 py-20 scroll-mt-0">
+          className="min-h-screen flex items-center px-6 sm:px-8 lg:px-16 py-12 sm:py-16 lg:py-20 scroll-mt-0">
           <div className="max-w-6xl w-full">
             <motion.h2
-              className="font-serif font-bold text-[48px] text-foreground mb-12"
+              className="font-serif font-bold text-2xl sm:text-3xl md:text-4xl lg:text-[48px] text-foreground mb-8 sm:mb-12"
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
@@ -280,8 +315,8 @@ export default function Portfolio() {
             </motion.h2>
 
             <div className="relative">
-              {/* Vertical Timeline Line */}
-              <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-foreground/20" />
+              {/* Vertical Timeline Line (hidden on small screens) */}
+              <div className="hidden md:block absolute left-8 top-0 bottom-0 w-0.5 bg-foreground/20" />
 
               <motion.div
                 className="space-y-12"
@@ -335,7 +370,7 @@ export default function Portfolio() {
                     viewport={{ once: false, amount: 0.3 }}>
                     {/* Timeline Dot */}
                     <div className="relative flex-shrink-0">
-                      <div className="w-16 h-16 bg-foreground rounded-full flex items-center justify-center text-2xl border-4 border-background shadow-lg z-10">
+                      <div className="w-12 h-12 md:w-16 md:h-16 bg-foreground rounded-full flex items-center justify-center text-xl md:text-2xl border-4 border-background shadow-lg z-10">
                         {experience.icon}
                       </div>
                     </div>
@@ -353,7 +388,7 @@ export default function Portfolio() {
                             {experience.company}
                           </p>
                         </div>
-                        <span className="font-sans text-[14px] text-foreground/60 font-medium md:text-right">
+                        <span className="font-sans text-sm md:text-[14px] text-foreground/60 font-medium md:text-right">
                           {experience.period}
                         </span>
                       </div>
@@ -381,10 +416,10 @@ export default function Portfolio() {
         {/* Works Section */}
         <section
           id="works"
-          className="min-h-screen flex items-center px-16 py-20 scroll-mt-0">
+          className="min-h-screen flex items-center px-6 sm:px-8 lg:px-16 py-12 sm:py-16 lg:py-20 scroll-mt-0">
           <div className="max-w-6xl w-full">
             <motion.h2
-              className="font-serif font-bold text-[48px] text-foreground mb-12"
+              className="font-serif font-bold text-2xl sm:text-3xl md:text-4xl lg:text-[48px] text-foreground mb-8 sm:mb-12"
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
@@ -393,7 +428,7 @@ export default function Portfolio() {
             </motion.h2>
 
             <motion.div
-              className="grid grid-cols-1 md:grid-cols-2 gap-10"
+              className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.8 }}
